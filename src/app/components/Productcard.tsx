@@ -20,9 +20,10 @@ export default function ProductCard ({name , price, image , onaddtocart}: Produc
             )}
             <h2 className="text-black">{name}</h2>
             <p className="text-black">${price}</p>
-            <button onClick={onaddtocart} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-                 ADD TO CART
+            <button onClick={onaddtocart} className="bg-transparent hover:scale-110 px-4 py-2 rounded">
+            <img src="/icons/add.png" alt="Add to Cart" className="w-8 h-8 mx-auto" />
             </button>
+
         </div>
 
     );

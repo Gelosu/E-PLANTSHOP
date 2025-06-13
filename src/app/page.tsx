@@ -43,7 +43,7 @@ function Main() {
         </div>
 
         
-        <div className="grid grid-cols-3 gap-10 text-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product, index) => (
               <ProductCard
