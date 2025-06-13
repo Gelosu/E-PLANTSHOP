@@ -42,8 +42,9 @@ const CartModal: React.FC<CartModalProps> = ({
                   onClick={() => handleremovefromcart(idx)}
                   className="text-red-500 hover:text-red-700 text-lg font-bold ml-4"
                   title="Remove item"
+                  
                 >
-                  🗑️
+                  <img src="/icons/delete.png" width="24px"></img>
                 </button>
               </li>
             ))}
