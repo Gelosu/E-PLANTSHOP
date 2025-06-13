@@ -24,10 +24,10 @@ function Main() {
   );
 
   return (
-    <main className="p-6">
+    <main className="p-6 bg-black">
       <div>
-        <h1 className="bg-green-500 text-center font-bold text-xl">WELCOME TO E-PLANT SHOP</h1>
-        <p className="italic text-center mt-10 mb-10">
+        <h1 className="text-white bg-green-500 text-center font-bold text-xl">WELCOME TO E-PLANT SHOP</h1>
+        <p className="text-white italic text-center mt-10 mb-10">
           A Virtual shop you can purchase plants with Ease!
         </p>
 
