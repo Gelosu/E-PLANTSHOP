@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import ProductCard from './components/Productcard';
 import products from './components/products';
 import CartModal from './components/cartfunction';
@@ -172,4 +172,11 @@ function Main() {
   );
 }
 
-export default Main;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading checkout...</div>}>
+      <Main />
+    </Suspense>
+  );
+}
+
