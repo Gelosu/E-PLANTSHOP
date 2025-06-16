@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-export default function InformationPage() {
+function InformationPage() {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'promo'>('card');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [formData, setFormData] = useState({
@@ -392,5 +392,13 @@ const handleSubmit = (e: React.FormEvent) => {
       </form>
     </div>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading checkout...</div>}>
+      <InformationPage />
+    </Suspense>
   );
 }

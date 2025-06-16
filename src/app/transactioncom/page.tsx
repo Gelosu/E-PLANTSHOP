@@ -1,9 +1,9 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
-export default function TransactionComplete() {
+function TransactionComplete() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -74,5 +74,14 @@ export default function TransactionComplete() {
         </button>
       </div>
     </div>
+  );
+}
+
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading checkout...</div>}>
+      <TransactionComplete/>
+    </Suspense>
   );
 }
