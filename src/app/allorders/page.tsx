@@ -91,7 +91,7 @@ function AllOrdersPage() {
     ((window.innerWidth < 768 && filtered.length > 5) || (window.innerWidth >= 768 && filtered.length > 3));
 
   return (
-    <div className="min-h-screen bg-green-300 px-4 py-6">
+    <div className="min-h-screen bg-green-600 px-4 py-6">
       {/* Back Button */}
       <button
         onClick={() => router.push('/')}
