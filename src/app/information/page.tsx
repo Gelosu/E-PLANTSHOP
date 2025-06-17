@@ -32,7 +32,7 @@ const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
   const { name, value } = e.target;
   
-
+  
   const numericOnlyFields = {
     cardNumber: 13,
     cvv: 4,
@@ -88,9 +88,9 @@ const handleSubmit = (e: React.FormEvent) => {
   const maskedCard = paymentMethod === 'card' ? cardNumber.slice(-4) : 'PROMO';
 
   router.push(
-    `/transactioncom?name=${encodeURIComponent(fullName)}&address=${encodeURIComponent(address)}&zip=${formData.zipCode}&card=${maskedCard}&total=${totalPrice.toFixed(2)}&paymentMethod=${paymentMethod}&promo=${promoCode}
-`
-  );
+  `/transactioncom?name=${encodeURIComponent(fullName)}&address=${encodeURIComponent(address)}&zip=${formData.zipCode}&card=${maskedCard}&total=${totalPrice.toFixed(2)}&paymentMethod=${paymentMethod}&promo=${encodeURIComponent(promoCode)}&cart=${encodeURIComponent(JSON.stringify(cartItems))}`
+);
+
 };
 
 
@@ -122,8 +122,8 @@ const handleSubmit = (e: React.FormEvent) => {
 
 
   return (
-    <div className="min-h-screen bg-green-500 flex items-center justify-center px-4">
-    <div className="w-full max-w-lg mx-auto p-6 bg-white min-h-screen">
+    <div className="min-h-screen bg-green-600 flex items-center justify-center px-4">
+    <div className="w-full max-w-300 mx-auto p-6 bg-white min-h-screen">
 
         <button
         type="button"

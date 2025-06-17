@@ -15,7 +15,11 @@ function TransactionComplete() {
   const method = searchParams.get('paymentMethod') || 'card';
   const promo = searchParams.get('promo') || '';
 
-  const maskedCard = '************' + card.slice(-4);
+  const maskedCard = '*****' + card.slice(-4);
+  const cart = searchParams.get('cart');
+  const cartItemsRaw = cart ? JSON.parse(decodeURIComponent(cart)) : [];
+  const cartItems = groupCartItems(cartItemsRaw);
+
 
   const [estimatedDate, setEstimatedDate] = useState('');
   const [refNumber] = useState(() =>
@@ -38,7 +42,12 @@ function TransactionComplete() {
     promo,
     status: 'Ordered',
     estimatedArrival: est,
-    timestamp: new Date().toISOString(), // ⏱ Add order date here
+    timestamp: new Date().toISOString(),
+    products: cartItems.map(item => ({
+    name: item.name,
+    image: item.image,
+    quantity: item.quantity,
+  })),
   };
 
   const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
@@ -52,8 +61,39 @@ function TransactionComplete() {
     alert('Reference number copied to clipboard!');
   };
 
+ function groupCartItems(cartItems: any[]) {
+  const grouped: {
+    [key: string]: {
+      name: string;
+      quantity: number;
+      price: number;
+      image: string;
+    };
+  } = {};
+
+  cartItems.forEach(item => {
+    const quantity = parseInt(item.quantity) || 1;
+    const price = parseFloat(item.price) || 0;
+    const image = item.image || ''; // fallback in case image is missing
+
+    if (grouped[item.name]) {
+      grouped[item.name].quantity += quantity;
+    } else {
+      grouped[item.name] = {
+        name: item.name,
+        quantity,
+        price,
+        image,
+      };
+    }
+  });
+
+  return Object.values(grouped);
+}
+
+
   return (
-    <div className="min-h-screen bg-green-300 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-green-600 flex items-center justify-center px-4">
       <div className="bg-white p-6 max-w-xl w-full rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-4 text-green-700">Order Confirmed ✅</h1>
 
@@ -78,13 +118,35 @@ function TransactionComplete() {
         </div>
 
         <div className="mt-6 border rounded p-4 bg-gray-50">
-          <h2 className="font-semibold mb-2 text-black">Order Progress</h2>
-          <div className="text-sm text-black ">
-            <p>Order placed ✅</p>
-            <p>Preparing order...</p>
-            <p>Tracking and delivery details will appear soon.</p>
+        <h2 className="font-semibold mb-2 text-black">ORDER ITEMS:</h2>
+        <div className={`text-sm text-black space-y-1 ${cartItems.length > 3 ? 'max-h-60 overflow-y-auto pr-2' : ''}`}>
+
+          <div className="grid grid-cols-3 gap-2 font-semibold text-center border-b pb-2 mb-2">
+            <span>Item</span>
+            <span>Quantity</span>
+            <span>Total Price</span>
           </div>
+
+          {cartItems.map((item, index) => (
+                <div key={index} className="grid grid-cols-3 gap-2 text-center items-center py-2">
+                  <div>
+                    <p>{item.name}</p>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="mx-auto mt-1 w-16 h-16 object-cover rounded"
+                    />
+                  </div>
+                  <span>x{item.quantity}</span>
+                  <span>${(item.quantity * item.price).toFixed(2)}</span>
+                </div>
+              ))}
+
+
         </div>
+      </div>
+
+
 
         <button
           onClick={() => router.push('/')}
