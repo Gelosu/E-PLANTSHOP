@@ -195,7 +195,7 @@ const handleSubmit = (e: React.FormEvent) => {
         <div>
           <h2 className="font-bold mb-2 text-green-700">Payment Method</h2>
           <div className="flex gap-4">
-            <label className="flex items-center gap-2 text-black">
+            <label className="flex items-center gap-2">
               <input
                 type="radio"
                 name="paymentMethod"
@@ -205,7 +205,7 @@ const handleSubmit = (e: React.FormEvent) => {
               />
               Credit/Debit Card
             </label>
-            <label className="flex items-center gap-2 text-black">
+            <label className="flex items-center gap-2">
               <input
                 type="radio"
                 name="paymentMethod"

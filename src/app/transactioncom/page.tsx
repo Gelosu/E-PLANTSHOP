@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
+import LoadingScreen3 from '../components/loadingscreen3';
 
 function TransactionComplete() {
   const searchParams = useSearchParams();
@@ -25,6 +26,13 @@ function TransactionComplete() {
   const [refNumber] = useState(() =>
     'REF-' + Math.floor(100000000 + Math.random() * 900000000)
   );
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+      const timer = setTimeout(() => setLoading(false), 3000);
+      return () => clearTimeout(timer)
+    }, []);
+
 
   useEffect(() => {
   const date = new Date();
@@ -91,7 +99,7 @@ function TransactionComplete() {
   return Object.values(grouped);
 }
 
-
+  if (loading) return <LoadingScreen3 />;
   return (
     <div className="min-h-screen bg-green-600 flex items-center justify-center px-4">
       <div className="bg-white p-6 max-w-xl w-full rounded-lg shadow-md">
