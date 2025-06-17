@@ -5,7 +5,7 @@ import ProductCard from './components/Productcard';
 import products from './components/products';
 import CartModal from './components/cartfunction';
 import { Menu } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams , useRouter } from 'next/navigation';
 
 type CartItem = {
   name: string;
@@ -20,6 +20,8 @@ function Main() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const router = useRouter();
+
 
   useEffect(() => {
     const encoded = searchParams.get('cart');
@@ -87,36 +89,39 @@ function Main() {
       </button>
 
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-green-800 w-100 text-white z-50">
-          <div className="p-6 flex flex-col h-full">
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="text-white text-right mb-4 self-end text-xl"
-            >
-              ✕
-            </button>
+        <div className="fixed inset-0 bg-green-800 text-white z-50 overflow-y-auto scrollbar-hide md:w-64">
 
-            <h2 className="text-xl font-bold mb-6 text-center">Categories</h2>
-            <ul className="flex flex-col gap-4">
-              {categories.map((cat, idx) => (
-                <li key={idx}>
-                  <button
-                    onClick={() => {
-                      setSelectedCategory(cat);
-                      setSidebarOpen(false);
-                    }}
-                    className={`w-full text-left hover:bg-green-600 p-3 rounded ${
-                      selectedCategory === cat ? 'bg-green-700' : ''
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="p-6 flex flex-col h-full">
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="text-white text-right mb-4 self-end text-xl"
+          >
+            ✕
+          </button>
+
+          <h2 className="text-xl font-bold mb-6 text-center">Categories</h2>
+          <ul className="flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-150px)] scrollbar-hide">
+            {categories.map((cat, idx) => (
+              <li key={idx}>
+                <button
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                    setSidebarOpen(false);
+                  }}
+                  className={`w-full text-left hover:bg-green-600 p-3 rounded ${
+                    selectedCategory === cat ? 'bg-green-700' : ''
+                  }`}
+                >
+                  {cat}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
+      </div>
+
       )}
+
 
       <h1 className="text-white bg-green-500 text-center font-bold text-xl">
         WELCOME TO E-PLANT SHOP
@@ -151,14 +156,29 @@ function Main() {
         )}
       </div>
 
-      <div className="fixed bottom-6 right-6 z-50 text-lg">
+      <div
+        className={`fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3
+          ${sidebarOpen ? 'hidden md:flex' : 'flex'}`}
+      >
+        {/* Orders Button */}
+        <button
+          onClick={() => router.push('/allorders')}
+          className="bg-green-800 hover:bg-green-600 px-4 py-2 rounded text-white shadow-lg"
+        >
+          📦 Orders
+        </button>
+
+        {/* Cart Button */}
         <button
           onClick={() => setShowCart(!showCart)}
-          className="bg-green-800 hover:bg-green-500 px-4 py-2 rounded text-white"
+          className="bg-green-800 hover:bg-green-500 px-4 py-2 rounded text-white shadow-lg"
         >
           🛒 Cart ({cartItems.reduce((sum, item) => sum + item.quantity, 0)})
         </button>
       </div>
+
+
+
 
       {showCart && (
         <CartModal
