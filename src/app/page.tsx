@@ -5,14 +5,14 @@ import ProductCard from './components/Productcard';
 import products from './components/products';
 import CartModal from './components/cartfunction';
 import { Menu } from 'lucide-react';
-import { useSearchParams , useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import LoadingScreen from './components/loadingscreen';
 
 type CartItem = {
   name: string;
   price: number;
   image?: string;
   quantity: number;
-  
 };
 
 function Main() {
@@ -22,8 +22,14 @@ function Main() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
 
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 4000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const encoded = searchParams.get('cart');
@@ -38,12 +44,11 @@ function Main() {
             grouped.set(item.name, {
               name: item.name,
               price: item.price,
-              image: item.image, // fallback if missing
+              image: item.image,
               quantity: 1,
             });
           }
         });
-
         setCartItems(Array.from(grouped.values()));
       } catch (error) {
         console.error('Failed to parse cart from URL:', error);
@@ -52,7 +57,6 @@ function Main() {
   }, [searchParams]);
 
   const handleAddToCart = (product: { name: string; price: number; image: string }) => {
-
     setCartItems((prev) => {
       const updated = [...prev];
       const index = updated.findIndex((item) => item.name === product.name);
@@ -84,12 +88,13 @@ function Main() {
     });
   };
 
-  const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
-
-  const filteredProducts = products.filter(product =>
+  const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)))];
+  const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === 'All' || product.category === selectedCategory)
   );
+
+  if (loading) return <LoadingScreen />;
 
   return (
     <main className="p-6 bg-black min-h-screen relative">
