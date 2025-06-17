@@ -153,12 +153,12 @@ function AllOrdersPage() {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white w-96 p-6 rounded shadow-lg">
-            <h2 className="text-lg font-semibold mb-4">Cancel Order</h2>
+            <h2 className="text-lg font-semibold mb-4 text-black">Cancel Order</h2>
             <p className="mb-3 text-sm text-gray-600">Please select a reason for cancellation:</p>
             <select
               value={selectedReason}
               onChange={(e) => setSelectedReason(e.target.value)}
-              className="w-full border px-3 py-2 rounded mb-4"
+              className="w-full border px-3 py-2 rounded mb-4 text-black"
             >
               <option value="">-- Choose Reason --</option>
               <option value="Ordered by mistake">Ordered by mistake</option>
@@ -170,7 +170,7 @@ function AllOrdersPage() {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 border rounded hover:bg-gray-100"
+                className="px-4 py-2 border rounded hover:bg-gray-100 text-block"
               >
                 Cancel
               </button>
