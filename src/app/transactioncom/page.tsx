@@ -12,21 +12,40 @@ function TransactionComplete() {
   const zip = searchParams.get('zip') || '00000';
   const card = searchParams.get('card') || '0000000000000000';
   const total = searchParams.get('total') || '0.00';
+  const method = searchParams.get('paymentMethod') || 'card';
+  const promo = searchParams.get('promo') || '';
 
   const maskedCard = '************' + card.slice(-4);
 
-  // Estimated delivery (3 days from now)
   const [estimatedDate, setEstimatedDate] = useState('');
-  useEffect(() => {
-    const date = new Date();
-    date.setDate(date.getDate() + 3);
-    setEstimatedDate(date.toDateString());
-  }, []);
-
-  // Generate reference number
   const [refNumber] = useState(() =>
     'REF-' + Math.floor(100000000 + Math.random() * 900000000)
   );
+
+  useEffect(() => {
+  const date = new Date();
+  const est = new Date(date.getTime() + 3 * 24 * 60 * 60 * 1000).toDateString();
+  setEstimatedDate(est);
+
+  const newOrder = {
+    ref: refNumber,
+    name,
+    address,
+    zip,
+    card: maskedCard,
+    total: parseFloat(total).toFixed(2),
+    method,
+    promo,
+    status: 'Ordered',
+    estimatedArrival: est,
+    timestamp: new Date().toISOString(), // ⏱ Add order date here
+  };
+
+  const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const updatedOrders = [...storedOrders, newOrder];
+  localStorage.setItem('orders', JSON.stringify(updatedOrders));
+}, []);
+
 
   const handleCopy = () => {
     navigator.clipboard.writeText(refNumber);
@@ -39,12 +58,14 @@ function TransactionComplete() {
         <h1 className="text-2xl font-bold mb-4 text-green-700">Order Confirmed ✅</h1>
 
         <div className="space-y-3 text-sm text-gray-700">
-          <p><strong>Name:</strong> {name}, </p>
-          <p><strong>Shipping Address: {address}, {zip}</strong></p>
+          <p><strong>Name:</strong> {name}</p>
+          <p><strong>Shipping Address:</strong> {address}, {zip}</p>
           <p><strong>Estimated Delivery:</strong> {estimatedDate}</p>
+          <p><strong>Payment Method:</strong> {method}</p>
+          <p><strong>Promo Code:</strong> {promo || 'N/A'}</p>
           <p><strong>Card Charged:</strong> {maskedCard}</p>
           <p><strong>Total Charged:</strong> ${parseFloat(total).toFixed(2)}</p>
-          
+
           <div className="flex items-center justify-between mt-3">
             <p><strong>Reference #:</strong> {refNumber}</p>
             <button
@@ -56,7 +77,6 @@ function TransactionComplete() {
           </div>
         </div>
 
-        {/* Order Progress Placeholder */}
         <div className="mt-6 border rounded p-4 bg-gray-50">
           <h2 className="font-semibold mb-2">Order Progress</h2>
           <div className="text-sm text-gray-500">
@@ -77,11 +97,10 @@ function TransactionComplete() {
   );
 }
 
-
 export default function Page() {
   return (
     <Suspense fallback={<div>Loading checkout...</div>}>
-      <TransactionComplete/>
+      <TransactionComplete />
     </Suspense>
   );
 }
