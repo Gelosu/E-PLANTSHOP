@@ -17,6 +17,7 @@ type OrderData = {
   estimatedArrival: string;
   timestamp: string;
   cancelReason?: string;
+  image?: string;
 };
 
 function AllOrdersPage() {

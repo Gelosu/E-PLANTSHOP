@@ -10,7 +10,9 @@ import { useSearchParams , useRouter } from 'next/navigation';
 type CartItem = {
   name: string;
   price: number;
+  image?: string;
   quantity: number;
+  
 };
 
 function Main() {
@@ -29,13 +31,19 @@ function Main() {
       try {
         const decoded = JSON.parse(decodeURIComponent(encoded));
         const grouped = new Map<string, CartItem>();
-        decoded.forEach((item: { name: string; price: number }) => {
+        decoded.forEach((item: { name: string; price: number; image: string }) => {
           if (grouped.has(item.name)) {
             grouped.get(item.name)!.quantity += 1;
           } else {
-            grouped.set(item.name, { ...item, quantity: 1 });
+            grouped.set(item.name, {
+              name: item.name,
+              price: item.price,
+              image: item.image, // fallback if missing
+              quantity: 1,
+            });
           }
         });
+
         setCartItems(Array.from(grouped.values()));
       } catch (error) {
         console.error('Failed to parse cart from URL:', error);
@@ -43,7 +51,8 @@ function Main() {
     }
   }, [searchParams]);
 
-  const handleAddToCart = (product: { name: string; price: number }) => {
+  const handleAddToCart = (product: { name: string; price: number; image: string }) => {
+
     setCartItems((prev) => {
       const updated = [...prev];
       const index = updated.findIndex((item) => item.name === product.name);
@@ -138,11 +147,11 @@ function Main() {
           placeholder="Search for a plant..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border border-gray-300 rounded-md px-4 py-2 w-full max-w-md"
+          className="border border-gray-300 rounded-md px-4 py-2 w-full max-w-md text-white"
         />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+      <div className="grid grid-cols-2 md:grid-cols-8 gap-4 text-center">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product, index) => (
             <ProductCard
@@ -154,7 +163,7 @@ function Main() {
             />
           ))
         ) : (
-          <p className="col-span-3 text-gray-500 italic">No products found.</p>
+          <p className="col-span-3 text-white italic ">No products found.</p>
         )}
       </div>
 
@@ -164,7 +173,7 @@ function Main() {
       >
         {/* Orders Button */}
         <button
-          onClick={() => router.push('/allorders')}
+          onClick={() => router.push( `/allorders?cart=${encodeURIComponent(JSON.stringify(cartItems))}`)}
           className="bg-green-800 hover:bg-green-600 px-4 py-2 rounded text-white shadow-lg"
         >
           📦 Orders

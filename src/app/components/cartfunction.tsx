@@ -7,6 +7,7 @@ type CartItem = {
   name: string;
   price: number;
   quantity: number;
+  image?: string;
 };
 
 interface CartModalProps {
@@ -31,8 +32,13 @@ const CartModal: React.FC<CartModalProps> = ({
   const handleCheckout = () => {
     setShowCart(false);
 
+    // Include image in the cart being sent
     const flatCart = cartItems.flatMap((item) =>
-      Array(item.quantity).fill({ name: item.name, price: item.price })
+      Array.from({ length: item.quantity }, () => ({
+        name: item.name,
+        price: item.price,
+        image: item.image ?? '', // fallback to empty string if undefined
+      }))
     );
 
     try {

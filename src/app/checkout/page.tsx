@@ -6,6 +6,7 @@ import { Suspense, useMemo, useState } from 'react';
 type CartItem = {
   name: string;
   price: number;
+  image?: string;
 };
 
 function CheckoutContent() {
@@ -28,7 +29,7 @@ function CheckoutContent() {
   }, [searchParams]);
 
   const groupedItems = useMemo(() => {
-    const map = new Map<string, { name: string; price: number; quantity: number }>();
+    const map = new Map<string, { name: string; price: number; quantity: number; image?: string }>();
 
     cartItems.forEach((item) => {
       if (map.has(item.name)) {
@@ -77,15 +78,19 @@ function CheckoutContent() {
             <div className={`border-b pb-4 ${cartItems.length > 8 ? 'max-h-64 overflow-y-auto pr-1' : ''}`}>
               <ul className="space-y-2">
                 {groupedItems.map((item, idx) => (
-                  <li key={idx} className="flex justify-between">
-                    <span>
-                      {item.name}
-                      {item.quantity > 1 && (
-                        <span className="text-sm text-gray-500"> × {item.quantity}</span>
-                      )}
-                    </span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
-                  </li>
+                  <li key={idx} className="flex items-center justify-between gap-4">
+                  {item.image && (
+                    <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                  )}
+                  <div className="flex-1">
+                    <span>{item.name}</span>
+                    {item.quantity > 1 && (
+                      <span className="text-sm text-gray-500"> × {item.quantity}</span>
+                    )}
+                  </div>
+                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+                </li>
+
                 ))}
               </ul>
             </div>
