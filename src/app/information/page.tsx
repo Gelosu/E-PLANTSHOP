@@ -128,9 +128,9 @@ const handleSubmit = (e: React.FormEvent) => {
         <button
         type="button"
         onClick={() => router.back()} // or router.push('/checkout') if you have a specific route
-         className="fixed top-4 left-4 bg-white text-green-600 border border-green-700 px-3 py-1 rounded hover:bg-green-100 shadow z-50"
+         className="fixed top-4 left-4 p-2 bg-white border border-green-700 rounded hover:bg-green-100 shadow z-50"
         >
-        ← Return to Checkout
+        <img src="/icons/back.png" alt="Back" className="w-6 h-6" />
         </button>
 
         
@@ -147,7 +147,7 @@ const handleSubmit = (e: React.FormEvent) => {
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="w-full border px-3 py-2 rounded text-sm"
+            className="w-full border px-3 py-2 rounded text-sm text-black"
             />
         </div>
 
@@ -159,7 +159,7 @@ const handleSubmit = (e: React.FormEvent) => {
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="w-full border px-3 py-2 rounded text-sm"
+            className="w-full border px-3 py-2 rounded text-sm text-black"
             />
         </div>
         </div>
@@ -173,7 +173,7 @@ const handleSubmit = (e: React.FormEvent) => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full border px-3 py-2 rounded text-sm"
+            className="w-full border px-3 py-2 rounded text-sm text-black"
         />
         </div>
 
@@ -186,7 +186,7 @@ const handleSubmit = (e: React.FormEvent) => {
             value={formData.address}
             onChange={handleChange}
             required
-            className="w-full border px-3 py-2 rounded text-sm"
+            className="w-full border px-3 py-2 rounded text-sm text-black"
         />
         </div>
 
@@ -230,7 +230,7 @@ const handleSubmit = (e: React.FormEvent) => {
                 value={formData.cardName}
                 onChange={handleChange}
                 required
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 rounded text-black"
               />
             </div>
               <label className="block font-semibold text-gray-700 mb-1">Card Number</label>
@@ -243,7 +243,7 @@ const handleSubmit = (e: React.FormEvent) => {
                 maxLength={13}
                 inputMode="numeric"
                 pattern="\d*"
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 rounded text-black"
                 />
 
             </div>
@@ -258,7 +258,7 @@ const handleSubmit = (e: React.FormEvent) => {
                   value={formData.expiryMonth}
                   onChange={handleChange}
                   required
-                  className="w-full border px-3 py-2 rounded"
+                  className="w-full border px-3 py-2 rounded text-black"
                 >
                   <option value="">Month</option>
                   {Array.from({ length: 12 }, (_, i) => (
@@ -275,7 +275,7 @@ const handleSubmit = (e: React.FormEvent) => {
                   value={formData.expiryYear}
                   onChange={handleChange}
                   required
-                  className="w-full border px-3 py-2 rounded"
+                  className="w-full border px-3 py-2 rounded text-black"
                 >
                   <option value="">Year</option>
                   {Array.from({ length: 10 }, (_, i) => {
@@ -302,7 +302,7 @@ const handleSubmit = (e: React.FormEvent) => {
                 maxLength={4}
                 inputMode="numeric"
                 pattern="\d*"
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 rounded text-black"
                 />
 
               </div>
@@ -317,7 +317,7 @@ const handleSubmit = (e: React.FormEvent) => {
                 maxLength={5}
                 inputMode="numeric"
                 pattern="\d*"
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 rounded text-black"
                 />
 
               </div>
@@ -336,7 +336,7 @@ const handleSubmit = (e: React.FormEvent) => {
               value={formData.promoCode}
               onChange={handleChange}
               required
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border px-3 py-2 rounded text-black"
             />
           </div>
         )}

@@ -78,8 +78,8 @@ function TransactionComplete() {
         </div>
 
         <div className="mt-6 border rounded p-4 bg-gray-50">
-          <h2 className="font-semibold mb-2">Order Progress</h2>
-          <div className="text-sm text-gray-500">
+          <h2 className="font-semibold mb-2 text-black">Order Progress</h2>
+          <div className="text-sm text-black ">
             <p>Order placed ✅</p>
             <p>Preparing order...</p>
             <p>Tracking and delivery details will appear soon.</p>

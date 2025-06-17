@@ -71,9 +71,9 @@ function AllOrdersPage() {
     <div className="min-h-screen bg-green-300 px-4 py-6">
         <button
         onClick={() => router.push('/')}
-        className="fixed top-6 left-6 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow z-50"
+        className="fixed top-10 left-8 p-2 bg-white border border-green-700 rounded hover:bg-green-100 shadow z-50"
         >
-        ← Back
+        <img src="/icons/back.png" alt="Back" className="w-6 h-6" />
         </button>
 
       <div className="max-w-3xl mx-auto bg-white shadow-md rounded p-6">

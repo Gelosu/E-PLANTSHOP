@@ -84,51 +84,53 @@ function Main() {
 
   return (
     <main className="p-6 bg-black min-h-screen relative">
-      <button onClick={() => setSidebarOpen(true)} className="text-white fixed top-6 left-9 z-50">
-        <Menu size={28} />
-      </button>
 
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-green-800 text-white z-50 overflow-y-auto scrollbar-hide md:w-64">
+  {/* Header with Button and Title */}
+  <div className="bg-green-500 text-white flex items-center justify-between px-4 py-3 rounded">
+    <button onClick={() => setSidebarOpen(true)} className="text-white">
+      <Menu size={28} />
+    </button>
+    <h1 className="text-center font-bold text-sm flex-1">WELCOME TO E-PLANT SHOP</h1>
+    <div className="w-[28px]" /> {/* Empty space for alignment with Menu icon */}
+  </div>
 
-        <div className="p-6 flex flex-col h-full">
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="text-white text-right mb-4 self-end text-xl"
-          >
-            ✕
-          </button>
+  {/* Sidebar */}
+  {sidebarOpen && (
+    <div className="fixed inset-0 bg-green-800 text-white z-50 overflow-y-auto scrollbar-hide md:w-64">
+      <div className="p-6 flex flex-col h-full">
+        <button
+          onClick={() => setSidebarOpen(false)}
+          className="text-white text-right mb-4 self-end text-xl"
+        >
+          ✕
+        </button>
 
-          <h2 className="text-xl font-bold mb-6 text-center">Categories</h2>
-          <ul className="flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-150px)] scrollbar-hide">
-            {categories.map((cat, idx) => (
-              <li key={idx}>
-                <button
-                  onClick={() => {
-                    setSelectedCategory(cat);
-                    setSidebarOpen(false);
-                  }}
-                  className={`w-full text-left hover:bg-green-600 p-3 rounded ${
-                    selectedCategory === cat ? 'bg-green-700' : ''
-                  }`}
-                >
-                  {cat}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <h2 className="text-xl font-bold mb-6 text-center">Categories</h2>
+        <ul className="flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-150px)] scrollbar-hide">
+          {categories.map((cat, idx) => (
+            <li key={idx}>
+              <button
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  setSidebarOpen(false);
+                }}
+                className={`w-full text-left hover:bg-green-600 p-3 rounded ${
+                  selectedCategory === cat ? 'bg-green-700' : ''
+                }`}
+              >
+                {cat}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
+    </div>
+  )}
 
-      )}
-
-
-      <h1 className="text-white bg-green-500 text-center font-bold text-xl">
-        WELCOME TO E-PLANT SHOP
-      </h1>
-      <p className="text-white italic text-center mt-10 mb-10">
-        A Virtual shop you can purchase plants with Ease!
-      </p>
+  {/* Tagline */}
+  <p className="text-white italic text-center mt-10 mb-10">
+    A Virtual shop you can purchase plants with Ease!
+  </p>
 
       <div className="text-center mb-6">
         <input
