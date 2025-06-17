@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import LoadingScreen2 from '../components/loadingscreen2';
 
 type OrderData = {
   ref: string;
@@ -29,6 +30,7 @@ function AllOrdersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'recent' | 'oldest'>('recent');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
@@ -45,6 +47,12 @@ function AllOrdersPage() {
     }
 
     setOrders(Array.from(uniqueOrdersMap.values()));
+  }, []);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 4000); // simulate loading
+    return () => clearTimeout(timer);
   }, []);
 
   const openCancelModal = (index: number) => {
@@ -91,6 +99,8 @@ function AllOrdersPage() {
     typeof window !== 'undefined' &&
     ((window.innerWidth < 768 && filtered.length > 5) || (window.innerWidth >= 768 && filtered.length > 3));
 
+
+if (loading) return <LoadingScreen2 />;
   return (
     <div className="min-h-screen bg-green-600 px-4 py-6">
       {/* Back Button */}
