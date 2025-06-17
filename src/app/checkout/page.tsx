@@ -62,10 +62,11 @@ function CheckoutContent() {
 
         <button
           onClick={handleBack}
-          className="fixed top-4 left-4 bg-white text-green-600 border border-green-700 px-3 py-1 rounded hover:bg-green-100 shadow z-50"
+          className="fixed top-4 left-4 p-2 bg-white border border-green-700 rounded hover:bg-green-100 shadow z-50"
         >
-          ← Back
+          <img src="/icons/back.png" alt="Back" className="w-6 h-6" />
         </button>
+
 
         <h1 className="text-2xl font-bold mb-4">Checkout Summary</h1>
 

@@ -66,9 +66,9 @@ function OrderCheckout() {
     <div className="min-h-screen bg-green-300 px-4 py-6">
       <button
         onClick={() => router.push('/allorders')} 
-        className= "fixed top-6 left-6 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow z-50"
+        className="fixed top-10 left-8 p-2 bg-white border border-green-700 rounded hover:bg-green-100 shadow z-50"
       >
-        ← Back
+       <img src="/icons/back.png" alt="Back" className="w-6 h-6" />
       </button>
       <div className="max-w-xl mx-auto p-6 border shadow rounded bg-white">
         
@@ -121,7 +121,7 @@ function OrderCheckout() {
                   <div className="w-full flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center font-bold mx-auto">
-                        ✘
+                        X
                       </div>
                       <p className="mt-2 text-sm text-red-600 font-medium">Cancelled</p>
                     </div>
